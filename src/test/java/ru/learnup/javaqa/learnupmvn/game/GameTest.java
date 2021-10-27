@@ -17,7 +17,26 @@ public class GameTest {
         Assertions.assertFalse(result, "Скорость нулевая - игрок остается в игре");
     }
 
-    //test of countOfLose method
+    //test of play method with MAX_SPEED
+    @Test
+    public void aboveMaxSpeed() {
+        boolean result = Game.play(5);
+        Assertions.assertTrue(result, "Скорость выше максимальной - игрок выбывает");
+    }
+
+    @Test
+    public void maxSpeed() {
+        boolean result = Game.play(4);
+        Assertions.assertFalse(result, "Скорость равна максимальной - игрок остается в игре");
+    }
+
+    @Test
+    public void underMaxSpeed() {
+        boolean result = Game.play(3);
+        Assertions.assertFalse(result, "Скорость ниже максимальной - игрок остается в игре");
+    }
+
+    //test of countOfLose method + MAX_SPEED
     @Test
     public void existLosePlayersCOL() {
         int[] speedOfPlayers = new int[]{5, 0, 0, 8, 7};
@@ -26,14 +45,14 @@ public class GameTest {
 
     @Test
     public void notExistLosePlayersCOL() {
-        int[] speedOfPlayers = new int[]{0, 0};
+        int[] speedOfPlayers = new int[]{0, 0, 3, 2, 1};
         Assertions.assertEquals(0, Game.countOfLose(speedOfPlayers), "Проверка на верный подсчёт выбывающих игроков: 0");
     }
 
     @Test
     public void onlyLosePlayersCOL() {
-        int[] speedOfPlayers = new int[]{8, 9, 7};
-        Assertions.assertEquals(3, Game.countOfLose(speedOfPlayers), "Проверка на верный подсчёт выбывающих игроков: 0");
+        int[] speedOfPlayers = new int[]{8, 9, 7, 5};
+        Assertions.assertEquals(4, Game.countOfLose(speedOfPlayers), "Проверка на верный подсчёт выбывающих игроков: 0");
     }
 
     @Test
@@ -42,7 +61,7 @@ public class GameTest {
         Assertions.assertEquals(0, Game.countOfLose(speedOfPlayers), "Проверка на верный подсчёт выбывающих игроков: пустой массив");
     }
 
-    //test of speedsOfLose method
+    //test of speedsOfLose method + MAX_SPEED
     @Test
     public void existLosePlayersSOL() {
         int[] speedOfPlayers = new int[]{5, 0, 0, 8, 7};
@@ -52,14 +71,14 @@ public class GameTest {
 
     @Test
     public void notExistLosePlayersSOL() {
-        int[] speedOfPlayers = new int[]{0, 0};
+        int[] speedOfPlayers = new int[]{0, 0, 1, 2, 3};
         int[] speedOfLose = new int[0];
         Assertions.assertArrayEquals(speedOfLose, Game.speedsOfLose(speedOfPlayers), "Проверка на верный массив выбывших игороков: нет выбывших");
     }
 
     @Test
     public void onlyLosePlayersSOL() {
-        int[] speedOfPlayers = new int[]{8, 9, 7};
+        int[] speedOfPlayers = new int[]{8, 9, 7, 5};
         Assertions.assertArrayEquals(speedOfPlayers, Game.speedsOfLose(speedOfPlayers), "Проверка на верный массив выбывших игороков: только выбывшие");
     }
 
@@ -70,24 +89,24 @@ public class GameTest {
         Assertions.assertArrayEquals(speedOfLose, Game.speedsOfLose(speedOfPlayers), "Проверка на верный массив выбывших игороков: пустой массив");
     }
 
-    //test of speedsOfWin method
+    //test of speedsOfWin method + MAX_SPEED
     @Test
     public void existWinPlayersSOW() {
-        int[] speedOfPlayers = new int[]{5, 0, 0, 8, 7};
-        int[] speedOfWin = new int[]{0, 0};
+        int[] speedOfPlayers = new int[]{5, 0, 0, 8, 7, 4, 1};
+        int[] speedOfWin = new int[]{0, 0, 4, 1};
         Assertions.assertArrayEquals(speedOfWin, Game.speedsOfWin(speedOfPlayers), "Проверка на верный массив не выбывших игоков: есть не выбывшие");
     }
 
     @Test
     public void notExistWinPlayersSOW() {
-        int[] speedOfPlayers = new int[]{8, 8, 9};
+        int[] speedOfPlayers = new int[]{8, 8, 9, 5};
         int[] speedOfWin = new int[0];
         Assertions.assertArrayEquals(speedOfWin, Game.speedsOfWin(speedOfPlayers), "Проверка на верный массив не выбывших игороков: нет не выбывших");
     }
 
     @Test
     public void onlyWinPlayersSOW() {
-        int[] speedOfPlayers = new int[]{0, 0, 0};
+        int[] speedOfPlayers = new int[]{0, 0, 0, 1, 4, 3, 2};
         Assertions.assertArrayEquals(speedOfPlayers, Game.speedsOfWin(speedOfPlayers), "Проверка на верный массив не выбывших игороков: только не выбывшие");
     }
 

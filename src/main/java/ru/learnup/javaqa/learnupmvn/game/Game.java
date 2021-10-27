@@ -3,10 +3,11 @@ package ru.learnup.javaqa.learnupmvn.game;
 public class Game {
 
     static boolean isGreenLight = false;
+    static int MAX_SPEED = 4; //не может быть меньше 0
 
     public static boolean play(int speedOfPlayer) {
 
-        if (!isGreenLight && speedOfPlayer > 0) {
+        if (!isGreenLight && speedOfPlayer > MAX_SPEED) {
             return true;
         }
         return false;
@@ -16,7 +17,7 @@ public class Game {
         int count = 0;
 
         for (int playerSpeed : speedsOfPlayers) {
-            if (playerSpeed > 0 && !isGreenLight) {
+            if (playerSpeed > MAX_SPEED && !isGreenLight) {
                 count++;
             }
         }
@@ -28,7 +29,7 @@ public class Game {
         int index = 0;
 
         for (int playerSpeed : speedsOfPlayers) {
-            if (playerSpeed > 0 && !isGreenLight) {
+            if (playerSpeed > MAX_SPEED && !isGreenLight) {
                 speeds[index++] = playerSpeed;
             }
         }
@@ -40,7 +41,7 @@ public class Game {
         int index = 0;
 
         for (int playerSpeed : speedsOfPlayers) {
-            if ((playerSpeed == 0 && !isGreenLight) || isGreenLight) {
+            if ((playerSpeed <= MAX_SPEED && !isGreenLight) || isGreenLight) {
                 speeds[index++] = playerSpeed;
             }
         }
