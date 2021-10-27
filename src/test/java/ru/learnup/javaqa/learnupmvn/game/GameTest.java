@@ -13,7 +13,7 @@ public class GameTest {
 
     @Test
     public void ziroSpeed() {
-        boolean result = Game.play(0);
+        boolean result = Game.play(5);
         Assertions.assertFalse(result, "Скорость нулевая - игрок остается в игре");
     }
 
