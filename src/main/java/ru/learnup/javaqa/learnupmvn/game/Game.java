@@ -6,7 +6,6 @@ public class Game {
     static int MAX_SPEED = 4; //не может быть меньше 0
 
     public static boolean play(int speedOfPlayer) {
-
         if (!isGreenLight && speedOfPlayer > MAX_SPEED) {
             return true;
         }
@@ -46,5 +45,25 @@ public class Game {
             }
         }
         return speeds;
+    }
+
+    public static String[] namesOfWin(String[] playersInfo) {
+        int[] speeds = new int[playersInfo.length];
+
+        for (int i = 0; i < playersInfo.length; i++) {
+            speeds[i] = Integer.parseInt((playersInfo[i].split(" "))[1]);
+        }
+
+        String[] playerInfo = new String[2];
+        String[] Winners = new String[playersInfo.length - countOfLose(speeds)];
+        int index = 0;
+
+        for (String player : playersInfo) {
+            playerInfo = player.split(" ");
+            if ((Integer.parseInt(playerInfo[1]) <= MAX_SPEED && !isGreenLight) || isGreenLight) {
+                Winners[index++] = playerInfo[0];
+            }
+        }
+        return Winners;
     }
 }

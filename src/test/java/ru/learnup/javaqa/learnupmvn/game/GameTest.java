@@ -116,4 +116,33 @@ public class GameTest {
         int[] speedOfWin = new int[0];
         Assertions.assertArrayEquals(speedOfWin, Game.speedsOfWin(speedOfPlayers), "Проверка на верный массив не выбывших игороков: пустой массив");
     }
+
+    //test of namesOfWin method + MAX_SPEED
+    @Test
+    public void existWinPlayersNOW() {
+        String[] playersInfo = new String[]{"Jane 4", "Leya 0", "Sam 9", "Sara 5", "Jack 1"};
+        String[] winPlayersName = new String[]{"Jane", "Leya", "Jack"};
+        Assertions.assertArrayEquals(winPlayersName, Game.namesOfWin(playersInfo), "Проверка на верный массив имён выживших игоков: есть выжившие");
+    }
+
+    @Test
+    public void notExistWinPlayersNOW() {
+        String[] playersInfo = new String[]{"Jane 6", "Leya 7", "Sam 9", "Sara 5", "Jack 15"};
+        String[] winPlayersName = new String[0];
+        Assertions.assertArrayEquals(winPlayersName, Game.namesOfWin(playersInfo), "Проверка на верный массив имён выживших игоков: нет выживших");
+    }
+
+    @Test
+    public void onlyWinPlayersNOW() {
+        String[] playersInfo = new String[]{"Jane 4", "Leya 0", "Sam 2", "Sara 3", "Jack 1"};
+        String[] winPlayersName = new String[]{"Jane", "Leya", "Sam", "Sara", "Jack"};
+        Assertions.assertArrayEquals(winPlayersName, Game.namesOfWin(playersInfo), "Проверка на верный массив имён выживших игоков: только выжившие");
+    }
+
+    @Test
+    public void emptyArrayNOW() {
+        String[] playersInfo = new String[0];
+        String[] winPlayersName = new String[0];
+        Assertions.assertArrayEquals(winPlayersName, Game.namesOfWin(playersInfo), "Проверка на верный массив имён выживших игоков: пустой массив");
+    }
 }

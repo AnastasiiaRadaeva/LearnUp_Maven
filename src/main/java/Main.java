@@ -3,6 +3,7 @@ import ru.learnup.javaqa.learnupmvn.game.Game;
 public class Main {
     public static void main(String[] args) {
         int[] speedsOfPlayers = new int[]{5, 0, 0, 7, 0, 9, 4};
+        String[] playersInfo = new String[]{"Jane 4", "Leya 0", "Sam 9", "Sara 5", "Jack 1"};
 
         if (Game.play(speedsOfPlayers[0])) {
             System.out.println("Игрок со скоростью " + speedsOfPlayers[0] + " выбыл из игры");
@@ -21,6 +22,17 @@ public class Main {
         System.out.print("\nСкорости не выбывающих игроков: ");
         for (int speed : Game.speedsOfWin(speedsOfPlayers)) {
             System.out.print(speed + " ");
+        }
+        System.out.println();
+
+        System.out.print("\nИмена и скорости игроков: ");
+        for (int i = 0; i < playersInfo.length - 1; i++) {
+            System.out.print(playersInfo[i] + ", ");
+        }
+        System.out.println(playersInfo[playersInfo.length - 1]);
+        System.out.print("\nИмена выживших игроков: ");
+        for (String name : Game.namesOfWin(playersInfo)) {
+            System.out.print(name + " ");
         }
         System.out.println();
     }
