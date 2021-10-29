@@ -2,17 +2,19 @@ package ru.learnup.javaqa.learnupmvn.game;
 
 public class Game {
 
-    static boolean isGreenLight = false;
-    static int MAX_SPEED = 4; //не может быть меньше 0
+    boolean isGreenLight;
+    int MAX_SPEED;
 
-    public static boolean play(int speedOfPlayer) {
-        if (!isGreenLight && speedOfPlayer > MAX_SPEED) {
-            return true;
-        }
-        return false;
+    public Game(boolean isGreenLight, int MAX_SPEED) {
+        this.isGreenLight = isGreenLight;
+        this.MAX_SPEED = MAX_SPEED;
     }
 
-    public static int countOfLose(int[] speedsOfPlayers) {
+    public boolean play(int speedOfPlayer) {
+        return !isGreenLight && speedOfPlayer > MAX_SPEED;
+    }
+
+    public int countOfLose(int[] speedsOfPlayers) {
         int count = 0;
 
         for (int playerSpeed : speedsOfPlayers) {
@@ -23,7 +25,7 @@ public class Game {
         return count;
     }
 
-    public static int[] speedsOfLose(int[] speedsOfPlayers) {
+    public int[] speedsOfLose(int[] speedsOfPlayers) {
         int[] speeds = new int[countOfLose(speedsOfPlayers)];
         int index = 0;
 
@@ -35,7 +37,7 @@ public class Game {
         return speeds;
     }
 
-    public static int[] speedsOfWin(int[] speedsOfPlayers) {
+    public int[] speedsOfWin(int[] speedsOfPlayers) {
         int[] speeds = new int[speedsOfPlayers.length - countOfLose(speedsOfPlayers)];
         int index = 0;
 
@@ -47,7 +49,7 @@ public class Game {
         return speeds;
     }
 
-    public static String[] namesOfWin(String[] playersInfo) {
+    public String[] namesOfWin(String[] playersInfo) {
         int[] speeds = new int[playersInfo.length];
 
         for (int i = 0; i < playersInfo.length; i++) {
