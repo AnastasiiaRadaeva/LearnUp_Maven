@@ -1,40 +1,32 @@
 import ru.learnup.javaqa.learnupmvn.game.Game;
+import ru.learnup.javaqa.learnupmvn.game.SpeedyGame;
 
 public class Main {
     public static void main(String[] args) {
-        int[] speedsOfPlayers = new int[]{5, 0, 0, 7, 0, 9, 4};
-        String[] playersInfo = new String[]{"Jane 4", "Leya 0", "Sam 9", "Sara 5", "Jack 1"};
-        Game firstGame = new Game(false, 4);
+        int[] speedsOfPlayers = new int[]{6, 0, 6, 0};
+        boolean[] isGreenLight = new boolean[]{false, false, true, true};
 
-        if (firstGame.play(speedsOfPlayers[0])) {
-            System.out.println("Игрок со скоростью " + speedsOfPlayers[0] + " выбыл из игры");
-        } else {
-            System.out.println("Игрок со скоростью " + speedsOfPlayers[0] + " остался в игре");
-        }
-        System.out.print("\nСкорости игроков: ");
-        for (int player : speedsOfPlayers) {
-            System.out.print(player + " ");
-        }
-        System.out.println("\nВыбыло игроков: " + firstGame.countOfLose(speedsOfPlayers));
-        System.out.print("Скорости выбывающих игроков: ");
-        for (int speed : firstGame.speedsOfLose(speedsOfPlayers)) {
-            System.out.print(speed + " ");
-        }
-        System.out.print("\nСкорости не выбывающих игроков: ");
-        for (int speed : firstGame.speedsOfWin(speedsOfPlayers)) {
-            System.out.print(speed + " ");
-        }
+        Game game = new Game(true);
+        SpeedyGame speedyGame = new SpeedyGame(false, 5);
+
+        System.out.println("Стандартная игра: зелёный свет, скорость - 5: игрок " +
+                (game.isFailed(5) ? "проиграл" : "выиграл"));
+        System.out.println("Быстрая игра: максимальная скорость - 5, " +
+                "красный свет, скорость - 7: игрок " +
+                (speedyGame.isFailed(7) ? "проиграл" : "выиграл"));
         System.out.println();
 
-        System.out.print("\nИмена и скорости игроков: ");
-        for (int i = 0; i < playersInfo.length - 1; i++) {
-            System.out.print(playersInfo[i] + ", ");
+        for (int i = 0; i < speedsOfPlayers.length; i++) {
+            game.setIsGreenLight(isGreenLight[i]);
+            speedyGame.setIsGreenLight(isGreenLight[i]);
+            System.out.println("Стандартная игра: " + (isGreenLight[i] ? "зеленый" : "красный")
+                    + " свет, скорость - " + speedsOfPlayers[i] + ": игрок " +
+                    (game.isFailed(speedsOfPlayers[i]) ? "проиграл" : "выиграл"));
+            System.out.println("Быстрая игра: максимальная скорость - 5, " +
+                    (isGreenLight[i] ? "зеленый" : "красный") + " свет, скорость - "
+                    + speedsOfPlayers[i] + ": игрок " +
+                    (speedyGame.isFailed(speedsOfPlayers[i]) ? "проиграл" : "выиграл"));
+            System.out.println();
         }
-        System.out.println(playersInfo[playersInfo.length - 1]);
-        System.out.print("\nИмена выживших игроков: ");
-        for (String name : firstGame.namesOfWin(playersInfo)) {
-            System.out.print(name + " ");
-        }
-        System.out.println();
     }
 }
