@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 public class GameTest {
     Game game = new Game(true);
     SpeedyGame speedyGame = new SpeedyGame(true, 5);
+    GameManager managerGame = new GameManager(game);
+    GameManager managerSpeedyGame = new GameManager(speedyGame);
 
     /*                                                 */
     /* --- test of getter and setter of Game class --- */
@@ -121,5 +123,72 @@ public class GameTest {
         speedyGame.setMaxSpeed(3);
         Assertions.assertTrue(speedyGame.isFailed(4), "Проверка isFailed, " +
                 "красный свет, максимальная скорость - 3, скорость 4 быстрой игры");
+    }
+
+    /*                                                    */
+    /* --- test of countOfRounds of GameManager class --- */
+    /*                                                    */
+
+    @Test
+    public void managerGame() {
+        int[] speedOfOnePlayer = new int[]{0, 0, 2, 3, 4, 9, 0, 1};
+        game.setIsGreenLight(false);
+        int expected = 2;
+        int actual = managerGame.countOfRounds(speedOfOnePlayer);
+        Assertions.assertEquals(expected, actual, "Проверка countOfRounds для стандартной игры:" +
+                " игрок продержится 2 раунда");
+    }
+
+    @Test
+    public void managerGameZeroRounds() {
+        int[] speedOfOnePlayer = new int[]{3, 0, 0, 2, 3, 4, 9, 0, 1};
+        game.setIsGreenLight(false);
+        int expected = 0;
+        int actual = managerGame.countOfRounds(speedOfOnePlayer);
+        Assertions.assertEquals(expected, actual, "Проверка countOfRounds для стандартной игры:" +
+                " игрок продержится 0 раундов");
+    }
+
+    @Test
+    public void managerGameEmptyArray() {
+        int[] speedOfOnePlayer = new int[]{};
+        game.setIsGreenLight(false);
+        int expected = 0;
+        int actual = managerGame.countOfRounds(speedOfOnePlayer);
+        Assertions.assertEquals(expected, actual, "Проверка countOfRounds:" +
+                " пустой массив");
+    }
+
+    @Test
+    public void managerSpeedyGame() {
+        int[] speedOfOnePlayer = new int[]{0, 0, 2, 3, 4, 9, 0, 1};
+        speedyGame.setIsGreenLight(false);
+        speedyGame.setMaxSpeed(3);
+        int expected = 4;
+        int actual = managerSpeedyGame.countOfRounds(speedOfOnePlayer);
+        Assertions.assertEquals(expected, actual, "Проверка countOfRounds для быстрой игры:" +
+                " игрок продержится 4 раунда");
+    }
+
+    @Test
+    public void managerSpeedyGameZeroRounds() {
+        int[] speedOfOnePlayer = new int[]{5, 3, 0, 0, 2, 3, 4, 9, 0, 1};
+        speedyGame.setIsGreenLight(false);
+        speedyGame.setMaxSpeed(3);
+        int expected = 0;
+        int actual = managerSpeedyGame.countOfRounds(speedOfOnePlayer);
+        Assertions.assertEquals(expected, actual, "Проверка countOfRounds для быстрой игры:" +
+                " игрок продержится 0 раундов");
+    }
+
+    @Test
+    public void managerSpeedyGameEmptyArray() {
+        int[] speedOfOnePlayer = new int[]{0, 0, 2, 3, 4, 9, 0, 1};
+        game.setIsGreenLight(false);
+        speedyGame.setIsGreenLight(false);
+        speedyGame.setMaxSpeed(3);
+        int gameCount = managerGame.countOfRounds(speedOfOnePlayer);
+        int speedyGameCount = managerSpeedyGame.countOfRounds(speedOfOnePlayer);
+        Assertions.assertNotEquals(gameCount, speedyGameCount, "Проверка работы полиморфизма");
     }
 }
