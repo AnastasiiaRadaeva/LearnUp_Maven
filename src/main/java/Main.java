@@ -1,6 +1,4 @@
-import ru.learnup.javaqa.learnupmvn.game.Game;
-import ru.learnup.javaqa.learnupmvn.game.SpeedyGame;
-import ru.learnup.javaqa.learnupmvn.game.GameManager;
+import ru.learnup.javaqa.learnupmvn.game.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -41,5 +39,18 @@ public class Main {
                 "игрок 1 при стандартной игре: " + managerGame.countOfRounds(speedOfOnePlayer));
         System.out.println("Количество раундов, которые продержался " +
                 "игрок 1 при быстрой игре: " + managerSpeedyGame.countOfRounds(speedOfOnePlayer));
+
+        //loser in GameManager
+        System.out.println("\n_______________________________________________");
+        FastPlayer fastPlayer = new FastPlayer(0, 2);
+        ConstantPlayer constPlayer = new ConstantPlayer(6);
+
+        game.setIsGreenLight(false);
+        speedyGame.setIsGreenLight(false);
+        speedyGame.setMaxSpeed(5);
+
+        System.out.println("Быстрый игрок и констанный игрок, быстрая игра, 5 раундов: "
+                + managerGame.loser(fastPlayer, constPlayer, speedyGame, 5));
     }
+
 }

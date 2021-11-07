@@ -191,4 +191,87 @@ public class GameTest {
         int speedyGameCount = managerSpeedyGame.countOfRounds(speedOfOnePlayer);
         Assertions.assertNotEquals(gameCount, speedyGameCount, "Проверка работы полиморфизма");
     }
+
+    /*                                                                       */
+    /* --- test of constructors of FastPlayer and ConstantPlayer classes --- */
+    /* ---               and getSpeed of FastPlayer class                --- */
+    /*                                                                       */
+    @Test
+    public void negativeConstructorCP() {
+        ConstantPlayer pl = new ConstantPlayer(-5);
+        Assertions.assertEquals(0, pl.getSpeed(), "ConstantPlayer, speed -5");
+    }
+
+    @Test
+    public void positiveConstructorCP() {
+        ConstantPlayer pl = new ConstantPlayer(5);
+        Assertions.assertEquals(5, pl.getSpeed(), "ConstantPlayer, speed 5");
+    }
+
+    @Test
+    public void negativeConstructorFP() {
+        FastPlayer pl = new FastPlayer(-5, 2);
+        Assertions.assertEquals(0, pl.getSpeed(), "FastPlayer, speed -5");
+    }
+
+    @Test
+    public void positiveConstructorFP() {
+        FastPlayer pl = new FastPlayer(5, 2);
+        Assertions.assertEquals(5, pl.getSpeed(), "FastPlayer, speed 5");
+    }
+
+    @Test
+    public void positiveGetSpeedFP() {
+        FastPlayer pl = new FastPlayer(0, 5);
+        int[] expected = new int[]{0, 5, 10, 15, 20};
+        int[] actual = new int[5];
+        for (int i = 0; i < 5; i++) {
+            actual[i] = pl.getSpeed();
+        }
+        Assertions.assertArrayEquals(expected, actual, "FastPlayer, start speed 0, speed step 5");
+    }
+
+    @Test
+    public void negativeGetSpeedFP() {
+        FastPlayer pl = new FastPlayer(7, -3);
+        int[] expected = new int[]{7, 4, 1, 0, 0};
+        int[] actual = new int[5];
+        for (int i = 0; i < 5; i++) {
+            actual[i] = pl.getSpeed();
+        }
+        Assertions.assertArrayEquals(expected, actual, "FastPlayer, start speed 7, speed step -2");
+    }
+
+    /*                                            */
+    /* --- test of loser of GameManager class --- */
+    /*                                            */
+    @Test
+    public void firstPlayerLoseFG() {
+        ConstantPlayer constPl = new ConstantPlayer(9);
+        FastPlayer fastPl = new FastPlayer(0, 2);
+        SpeedyGame game = new SpeedyGame(false, 5);
+        GameManager manager = new GameManager(game);
+        Assertions.assertEquals(-1, manager.loser(constPl, fastPl, game, 5),
+                "Loser of GameManager class, return -1");
+    }
+
+    @Test
+    public void secondPlayerLoseFG() {
+        ConstantPlayer constPl = new ConstantPlayer(0);
+        FastPlayer fastPl = new FastPlayer(0, 2);
+        SpeedyGame game = new SpeedyGame(false, 5);
+        GameManager manager = new GameManager(game);
+        Assertions.assertEquals(1, manager.loser(constPl, fastPl, game, 5),
+                "Loser of GameManager class, return 1");
+    }
+
+    @Test
+    public void nobodyLoseFG() {
+        ConstantPlayer constPl = new ConstantPlayer(0);
+        FastPlayer fastPl = new FastPlayer(0, 2);
+        SpeedyGame game = new SpeedyGame(false, 5);
+        GameManager manager = new GameManager(game);
+        Assertions.assertEquals(0, manager.loser(constPl, fastPl, game, 3),
+                "Loser of GameManager class, return 0");
+    }
 }
